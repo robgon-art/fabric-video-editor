@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
+    "dev:open": "powershell -ExecutionPolicy Bypass -File ./start-dev.ps1",
+    "dev:stop": "powershell -ExecutionPolicy Bypass -File ./stop-dev.ps1",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
