@@ -5,7 +5,23 @@ const mockCanvas = {
   renderAll: jest.fn(),
   setDimensions: jest.fn(),
   getObjects: jest.fn().mockReturnValue([]),
+  backgroundColor: '#111111',
+  setActiveObject: jest.fn(),
+  discardActiveObject: jest.fn(),
+  remove: jest.fn(),
+  add: jest.fn(),
+  width: 1920,
+  height: 1080
 };
+
+// Helper function to create mock fabric objects with common methods
+const createMockFabricObject = () => ({
+  set: jest.fn(),
+  scale: jest.fn(),
+  setCoords: jest.fn(),
+  setControlsVisibility: jest.fn(),
+  on: jest.fn(),
+});
 
 const fabric = {
   Canvas: jest.fn().mockImplementation(() => mockCanvas),
@@ -18,22 +34,16 @@ const fabric = {
       cornerSize: 10,
     },
   },
-  Image: jest.fn().mockImplementation(() => ({
-    set: jest.fn(),
-    scale: jest.fn(),
-    setCoords: jest.fn(),
-    setControlsVisibility: jest.fn(),
-  })),
+  Image: jest.fn().mockImplementation(() => createMockFabricObject()),
+  Textbox: jest.fn().mockImplementation(() => createMockFabricObject()),
+  Text: jest.fn().mockImplementation(() => createMockFabricObject()),
   util: {
     requestAnimFrame: jest.fn().mockReturnValue(0),
     createClass: jest.fn().mockImplementation((parent, properties) => {
       const newClass = function() {
         return {
           ...properties,
-          set: jest.fn(),
-          scale: jest.fn(),
-          setCoords: jest.fn(),
-          setControlsVisibility: jest.fn(),
+          ...createMockFabricObject(),
         };
       };
       return newClass;
