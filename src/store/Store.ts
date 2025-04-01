@@ -412,16 +412,36 @@ export class Store {
     const videoDurationMs = videoElement.duration * 1000;
     const aspectRatio = videoElement.videoWidth / videoElement.videoHeight;
     const id = getUid();
+    
+    // Calculate dimensions to fit the shorter side while maintaining aspect ratio
+    const canvasWidth = this.canvas?.width || 890;
+    const canvasHeight = this.canvas?.height || 500;
+    let width, height;
+    
+    if (aspectRatio > canvasWidth / canvasHeight) {
+      // Video is relatively wider than canvas - fit to height
+      height = canvasHeight;
+      width = height * aspectRatio;
+    } else {
+      // Video is relatively taller than canvas - fit to width
+      width = canvasWidth;
+      height = width / aspectRatio;
+    }
+    
+    // Center the video in the canvas
+    const x = (canvasWidth - width) / 2;
+    const y = (canvasHeight - height) / 2;
+
     this.addEditorElement(
       {
         id,
         name: `Media(video) ${index + 1}`,
         type: "video",
         placement: {
-          x: 0,
-          y: 0,
-          width: 100 * aspectRatio,
-          height: 100,
+          x,
+          y,
+          width,
+          height,
           rotation: 0,
           scaleX: 1,
           scaleY: 1,
@@ -448,16 +468,36 @@ export class Store {
     }
     const aspectRatio = imageElement.naturalWidth / imageElement.naturalHeight;
     const id = getUid();
+    
+    // Calculate dimensions to fit the shorter side while maintaining aspect ratio
+    const canvasWidth = this.canvas?.width || 890;
+    const canvasHeight = this.canvas?.height || 500;
+    let width, height;
+    
+    if (aspectRatio > canvasWidth / canvasHeight) {
+      // Image is relatively wider than canvas - fit to height
+      height = canvasHeight;
+      width = height * aspectRatio;
+    } else {
+      // Image is relatively taller than canvas - fit to width
+      width = canvasWidth;
+      height = width / aspectRatio;
+    }
+    
+    // Center the image in the canvas
+    const x = (canvasWidth - width) / 2;
+    const y = (canvasHeight - height) / 2;
+
     this.addEditorElement(
       {
         id,
         name: `Media(image) ${index + 1}`,
         type: "image",
         placement: {
-          x: 0,
-          y: 0,
-          width: 100 * aspectRatio,
-          height: 100,
+          x,
+          y,
+          width,
+          height,
           rotation: 0,
           scaleX: 1,
           scaleY: 1,
