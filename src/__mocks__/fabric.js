@@ -37,6 +37,26 @@ const fabric = {
   Image: jest.fn().mockImplementation(() => createMockFabricObject()),
   Textbox: jest.fn().mockImplementation(() => createMockFabricObject()),
   Text: jest.fn().mockImplementation(() => createMockFabricObject()),
+  CoverVideo: jest.fn().mockImplementation(() => ({
+    ...createMockFabricObject(),
+    getElement: jest.fn(),
+    scaleToWidth: jest.fn(),
+    scaleToHeight: jest.fn(),
+    width: 100,
+    height: 100,
+    scaleX: 1,
+    scaleY: 1
+  })),
+  CoverImage: jest.fn().mockImplementation(() => ({
+    ...createMockFabricObject(),
+    getElement: jest.fn(),
+    scaleToWidth: jest.fn(),
+    scaleToHeight: jest.fn(),
+    width: 100,
+    height: 100,
+    scaleX: 1,
+    scaleY: 1
+  })),
   util: {
     requestAnimFrame: jest.fn().mockReturnValue(0),
     createClass: jest.fn().mockImplementation((parent, properties) => {
