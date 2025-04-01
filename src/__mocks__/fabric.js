@@ -1,12 +1,14 @@
 // Mock fabric.js
 
+const mockCanvas = {
+  on: jest.fn(),
+  renderAll: jest.fn(),
+  setDimensions: jest.fn(),
+  getObjects: jest.fn().mockReturnValue([]),
+};
+
 const fabric = {
-  Canvas: jest.fn().mockImplementation(() => ({
-    on: jest.fn(),
-    renderAll: jest.fn(),
-    setDimensions: jest.fn(),
-    getObjects: jest.fn().mockReturnValue([]),
-  })),
+  Canvas: jest.fn().mockImplementation(() => mockCanvas),
   Object: {
     prototype: {
       transparentCorners: false,
@@ -23,10 +25,7 @@ const fabric = {
     setControlsVisibility: jest.fn(),
   })),
   util: {
-    requestAnimFrame: jest.fn().mockImplementation(() => {
-      // Don't call the callback to avoid infinite recursion
-      return 0; // Return a fake request ID
-    }),
+    requestAnimFrame: jest.fn().mockReturnValue(0),
     createClass: jest.fn().mockImplementation((parent, properties) => {
       const newClass = function() {
         return {
@@ -42,6 +41,6 @@ const fabric = {
   },
 };
 
-module.exports = { fabric };
+module.exports = { fabric, mockCanvas };
 module.exports.default = fabric;
 module.exports.__esModule = true; 
